@@ -2,6 +2,7 @@ package main
 
 import (
 	db2 "employeeOrgDB/internal/db"
+	"employeeOrgDB/internal/handlers"
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
@@ -17,6 +18,8 @@ func main() {
 	defer db.Close()
 
 	router := mux.NewRouter()
+
+	router.HandleFunc("/", handlers.IndexHandler).Methods("GET")
 
 	log.Println("Сервер запущен на порту 8080")
 	err = http.ListenAndServe(":8080", router)

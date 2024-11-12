@@ -23,7 +23,7 @@ func InitDB(user, password, dbname string) (*DB, error) {
 		return nil, err
 	}
 
-	log.Println("База данных подключена")
+	log.Println("Подключено к базе данных")
 
 	return &DB{db}, nil
 }
