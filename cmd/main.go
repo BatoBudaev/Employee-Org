@@ -17,9 +17,12 @@ func main() {
 
 	defer db.Close()
 
-	router := mux.NewRouter()
+	handlers.InitHandlers(db)
 
+	router := mux.NewRouter()
 	router.HandleFunc("/", handlers.IndexHandler).Methods("GET")
+	router.HandleFunc("/employees", handlers.EmployeesHandler).Methods("GET")
+	router.HandleFunc("/employees/add", handlers.AddEmployeeHandler).Methods("GET", "POST")
 
 	log.Println("Сервер запущен на порту 8080")
 	err = http.ListenAndServe(":8080", router)
