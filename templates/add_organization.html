@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить организацию</title>
+</head>
+<body>
+<h1>Добавить организацию</h1>
+<a href="/">На главную</a>
+<a href="/organizations">Список организаций</a>
+
+<form action="/organizations/add" method="post">
+    <label>Название:</label><br>
+    <input type="text" name="name" required><br><br>
+
+    <label>Адрес:</label><br>
+    <input type="text" name="address"><br><br>
+
+    <input type="hidden" name="return_to_add_employee" value="{{ .ReturnToAddEmployee }}">
+
+    <button type="submit">Добавить организацию</button>
+</form>
+</body>
+</html>

@@ -5,6 +5,7 @@ import (
 	"employeeOrgDB/internal/db"
 	"html/template"
 	"net/http"
+	"net/url"
 	"strconv"
 )
 
@@ -69,4 +70,60 @@ func AddEmployeeHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tmpl.Execute(w, organizations)
+}
+
+func OrganizationsHandler(w http.ResponseWriter, r *http.Request) {
+	organizations, err := database.GetOrganizations()
+	if err != nil {
+		http.Error(w, "Ошибка получения данных организаций", http.StatusInternalServerError)
+		return
+	}
+
+	tmpl, err := template.ParseFiles("templates/organizations.html")
+	if err != nil {
+		http.Error(w, "Ошибка загрузки шаблона", http.StatusInternalServerError)
+		return
+	}
+
+	tmpl.Execute(w, organizations)
+}
+
+func AddOrganizationHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodPost {
+		name := r.FormValue("name")
+		address := r.FormValue("address")
+		returnToAddEmployee := r.FormValue("return_to_add_employee")
+
+		err := database.AddOrganization(name, address)
+		if err != nil {
+			http.Error(w, "Ошибка добавления организации", http.StatusInternalServerError)
+			return
+		}
+
+		if returnToAddEmployee == "true" {
+			redirectURL := "/employees/add?return_to_add_employee=false"
+			http.Redirect(w, r, redirectURL, http.StatusSeeOther)
+			return
+		}
+
+		http.Redirect(w, r, "/organizations", http.StatusSeeOther)
+		return
+	}
+
+	tmpl, err := template.ParseFiles("templates/add_organization.html")
+	if err != nil {
+		http.Error(w, "Ошибка загрузки шаблона", http.StatusInternalServerError)
+		return
+	}
+
+	parseUrl, _ := url.Parse(r.URL.String())
+	returnToAddEmployee := parseUrl.Query().Get("return_to_add_employee")
+
+	data := struct {
+		ReturnToAddEmployee string
+	}{
+		ReturnToAddEmployee: returnToAddEmployee,
+	}
+
+	tmpl.Execute(w, data)
 }

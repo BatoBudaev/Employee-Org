@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Список организаций</h1>
+<a href="/">На главную</a> |
+<a href="/organizations/add">Добавить организацию</a>
+
+<table border="1">
+    <tr>
+        <th>Название</th>
+        <th>Адрес</th>
+    </tr>
+    {{range .}}
+    <tr>
+        <td>{{.Name}}</td>
+        <td>{{.Address}}</td>
+    </tr>
+    {{end}}
+</table>
+</body>
+</html>

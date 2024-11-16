@@ -23,6 +23,8 @@ func main() {
 	router.HandleFunc("/", handlers.IndexHandler).Methods("GET")
 	router.HandleFunc("/employees", handlers.EmployeesHandler).Methods("GET")
 	router.HandleFunc("/employees/add", handlers.AddEmployeeHandler).Methods("GET", "POST")
+	router.HandleFunc("/organizations", handlers.OrganizationsHandler).Methods("GET")
+	router.HandleFunc("/organizations/add", handlers.AddOrganizationHandler).Methods("GET", "POST")
 
 	log.Println("Сервер запущен на порту 8080")
 	err = http.ListenAndServe(":8080", router)

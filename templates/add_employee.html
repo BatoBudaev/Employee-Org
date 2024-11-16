@@ -5,25 +5,28 @@
     <title>Добавить сотрудника</title>
 </head>
 <body>
-    <h1>Добавить сотрудника</h1>
-    <a href="/">На главную</a> |
-    <a href="/employees">Список сотрудников</a>
+<h1>Добавить сотрудника</h1>
+<a href="/">На главную</a> |
+<a href="/employees">Список сотрудников</a>
 
-    <form action="/employees/add" method="post">
-        <label>Имя:</label><br>
-        <input type="text" name="first_name" required><br><br>
+<form action="/employees/add" method="post">
+    <label>Имя:</label><br>
+    <input type="text" name="first_name" required><br><br>
 
-        <label>Фамилия:</label><br>
-        <input type="text" name="last_name" required><br><br>
+    <label>Фамилия:</label><br>
+    <input type="text" name="last_name" required><br><br>
 
-        <label>Организация:</label><br>
-        <select name="organization_id" required>
-            {{range .}}
-            <option value="{{.ID}}">{{.Name}}</option>
-            {{end}}
-        </select><br><br>
+    <label>Организация:</label><br>
+    <select name="organization_id" required>
+        {{range .}}
+        <option value="{{.ID}}">{{.Name}}</option>
+        {{end}}
+    </select>
+    <a href="/organizations/add?return_to_add_employee=true" style="margin-left: 10px;">
+        <button type="button">Добавить организацию</button>
+    </a><br><br>
 
-        <button type="submit">Добавить сотрудника</button>
-    </form>
+    <button type="submit">Добавить сотрудника</button>
+</form>
 </body>
 </html>
