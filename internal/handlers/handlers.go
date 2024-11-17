@@ -3,7 +3,9 @@ package handlers
 import (
 	_ "database/sql"
 	"employeeOrgDB/internal/db"
+	"employeeOrgDB/internal/models"
 	"html/template"
+	"log"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -26,10 +28,23 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func EmployeesHandler(w http.ResponseWriter, r *http.Request) {
-	employees, err := database.GetEmployess()
+	query := r.URL.Query().Get("query")
+
+	employees, err := database.SearchEmployeesByQuery(query)
 	if err != nil {
+		log.Println("Ошибка выполнения запроса:", err)
 		http.Error(w, "Ошибка получения данных сотрудников", http.StatusInternalServerError)
 		return
+	}
+
+	log.Printf("Найдено сотрудников: %d\n", len(employees))
+
+	data := struct {
+		Employees   []models.Employee
+		SearchQuery string
+	}{
+		Employees:   employees,
+		SearchQuery: query,
 	}
 
 	tmpl, err := template.ParseFiles("templates/employees.html")
@@ -38,7 +53,7 @@ func EmployeesHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tmpl.Execute(w, employees)
+	tmpl.Execute(w, data)
 }
 
 func AddEmployeeHandler(w http.ResponseWriter, r *http.Request) {
@@ -126,4 +141,16 @@ func AddOrganizationHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tmpl.Execute(w, data)
+}
+
+func DeleteEmployeeHandler(w http.ResponseWriter, r *http.Request) {
+	empID := r.URL.Query().Get("id")
+
+	err := database.DeleteEmployee(empID)
+	if err != nil {
+		http.Error(w, "Ошибка удаления сотрудника", http.StatusInternalServerError)
+		return
+	}
+
+	http.Redirect(w, r, "/employees", http.StatusSeeOther)
 }

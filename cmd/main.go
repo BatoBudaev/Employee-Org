@@ -20,9 +20,13 @@ func main() {
 	handlers.InitHandlers(db)
 
 	router := mux.NewRouter()
+	fileServer := http.FileServer(http.Dir("./css"))
+	router.PathPrefix("/css/").Handler(http.StripPrefix("/css/", fileServer))
+
 	router.HandleFunc("/", handlers.IndexHandler).Methods("GET")
 	router.HandleFunc("/employees", handlers.EmployeesHandler).Methods("GET")
 	router.HandleFunc("/employees/add", handlers.AddEmployeeHandler).Methods("GET", "POST")
+	router.HandleFunc("/employees/delete", handlers.DeleteEmployeeHandler).Methods("GET")
 	router.HandleFunc("/organizations", handlers.OrganizationsHandler).Methods("GET")
 	router.HandleFunc("/organizations/add", handlers.AddOrganizationHandler).Methods("GET", "POST")
 

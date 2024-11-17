@@ -2,25 +2,45 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/style.css">
     <title>Список сотрудников</title>
 </head>
 <body>
-<h1>Список сотрудников</h1>
-<a href="/">На главную</a>
-<a href="/employees/add">Добавить сотрудника</a>
-<table border="1">
+<div class="center-content">
+    <h1>Список сотрудников</h1>
+    <ul class="navigation-list">
+        <a href="/" class="nav-link">На главную</a>
+        <a href="/employees/add" class="nav-link">Добавить сотрудника</a>
+    </ul>
+</div>
+
+<form action="/employees" method="get" class="search-form">
+    <label>
+        <input type="text" name="query" placeholder="Поиск..." value="{{.SearchQuery}}">
+    </label>
+    <button type="submit">Найти</button>
+</form>
+
+<table class="table">
     <tr>
         <th>ID</th>
         <th>Имя</th>
         <th>Фамилия</th>
         <th>Организация</th>
+        <th></th>
     </tr>
-    {{range .}}
+    {{range .Employees}}
     <tr>
         <td>{{.ID}}</td>
         <td>{{.FirstName}}</td>
         <td>{{.LastName}}</td>
         <td>{{.OrganizationName}}</td>
+        <td>
+            <a href="/employees/delete?id={{.ID}}"
+               onclick="return confirm('Вы уверены, что хотите удалить этого сотрудника?');">
+                Удалить
+            </a>
+        </td>
     </tr>
     {{end}}
 </table>

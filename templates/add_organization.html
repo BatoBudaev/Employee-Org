@@ -2,23 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/style.css">
     <title>Добавить организацию</title>
 </head>
 <body>
-<h1>Добавить организацию</h1>
-<a href="/">На главную</a>
-<a href="/organizations">Список организаций</a>
+<div class="center-content">
+    <h1>Добавить организацию</h1>
+    <ul class="navigation-list">
+        <a href="/" class="nav-link">На главную</a>
+        <a href="/organizations" class="nav-link">Список организаций</a>
+    </ul>
+</div>
 
+<div class="add-form">
 <form action="/organizations/add" method="post">
-    <label>Название:</label><br>
+    <label>Название:</label>
     <input type="text" name="name" required><br><br>
 
-    <label>Адрес:</label><br>
+    <label>Адрес:</label>
     <input type="text" name="address"><br><br>
 
     <input type="hidden" name="return_to_add_employee" value="{{ .ReturnToAddEmployee }}">
 
     <button type="submit">Добавить организацию</button>
 </form>
+</div>
 </body>
 </html>

@@ -2,31 +2,38 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/style.css">
     <title>Добавить сотрудника</title>
 </head>
 <body>
-<h1>Добавить сотрудника</h1>
-<a href="/">На главную</a> |
-<a href="/employees">Список сотрудников</a>
+<div class="center-content">
+    <h1>Добавить сотрудника</h1>
+    <ul class="navigation-list">
+        <a href="/" class="nav-link">На главную</a>
+        <a href="/employees" class="nav-link">Список сотрудников</a>
+    </ul>
+</div>
 
-<form action="/employees/add" method="post">
-    <label>Имя:</label><br>
-    <input type="text" name="first_name" required><br><br>
+<div class="add-form">
+    <form action="/employees/add" method="post">
+        <label>Имя:</label>
+        <input type="text" name="first_name" required><br><br>
 
-    <label>Фамилия:</label><br>
-    <input type="text" name="last_name" required><br><br>
+        <label>Фамилия:</label>
+        <input type="text" name="last_name" required><br><br>
 
-    <label>Организация:</label><br>
-    <select name="organization_id" required>
-        {{range .}}
-        <option value="{{.ID}}">{{.Name}}</option>
-        {{end}}
-    </select>
-    <a href="/organizations/add?return_to_add_employee=true" style="margin-left: 10px;">
-        <button type="button">Добавить организацию</button>
-    </a><br><br>
+        <label>Организация:</label>
+        <select name="organization_id" required>
+            {{range .}}
+            <option value="{{.ID}}">{{.Name}}</option>
+            {{end}}
+        </select>
+        <a href="/organizations/add?return_to_add_employee=true">
+            <button type="button" class="short-button">Добавить организацию</button>
+        </a><br><br>
 
-    <button type="submit">Добавить сотрудника</button>
-</form>
+        <button type="submit">Добавить сотрудника</button>
+    </form>
+</div>
 </body>
 </html>
