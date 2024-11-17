@@ -1,8 +1,7 @@
 # Employee-Org
-### REST API приложение для ведения словарей персонала и организаций. 
-___
+### REST API приложение для ведения словарей персонала и организаций.
 Видео https://drive.google.com/drive/folders/1MrbAZlafoSXgq4aakmWgx5vV_73QdJ2w?usp=sharing  
-___
+  
 _Диаграмма схемы базы данных_  
 ![img.png](assets/img.png)  
 ___
